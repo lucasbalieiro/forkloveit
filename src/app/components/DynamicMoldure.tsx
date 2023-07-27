@@ -18,13 +18,18 @@ const DynamicMoldureCanvas = ({
   sender,
   destination
 } : DynamicMoldureProps) => {
-  const canvasRef = useRef();
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasRef.current as unknown as HTMLCanvasElement | null;
+    if (!canvas) return;
+
     const ctx = canvas.getContext('2d');
-    canvas.width=1920
-    canvas.height=1080
+    if (!ctx) return;
+
+    canvas.width = 1920;
+    canvas.height = 1080;
+
 
     const backgroundImg = new Image();
     backgroundImg.src = background.src;
