@@ -1,23 +1,19 @@
 'use client'
+
+import background from "@/../public/background.png";
+import whiteboard from "@/../public/whiteboard.png";
+import flags from "@/../public/flags.svg"
+import envelope from "@/../public/envelope.png"
+import logo from "@/../public/logo.png"
 import { useEffect, useRef } from 'react';
 
 interface DynamicMoldureProps {
-    backgroundPath: string
-    whiteboardPath: string
-    flagsPath: string
-    envelopPath: string
-    logoPath: string
     message: string
     sender: string
     destination: string
 }
 
 const DynamicMoldureCanvas = ({
-  backgroundPath,
-  whiteboardPath,
-  flagsPath,
-  envelopPath,
-  logoPath,
   message,
   sender,
   destination
@@ -31,19 +27,19 @@ const DynamicMoldureCanvas = ({
     canvas.height=1080
 
     const backgroundImg = new Image();
-    backgroundImg.src = backgroundPath;
+    backgroundImg.src = background.src;
 
     const whiteboardImg = new Image();
-    whiteboardImg.src = whiteboardPath;
+    whiteboardImg.src = whiteboard.src;
 
     const flagsImg = new Image();
-    flagsImg.src = flagsPath;
+    flagsImg.src = flags.src;
 
     const envelopImg = new Image();
-    envelopImg.src = envelopPath;
+    envelopImg.src = envelope.src;
 
     const logImg = new Image();
-    logImg.src = logoPath;
+    logImg.src = logo.src;
 
     let imagesLoaded = 0;
 
@@ -88,7 +84,7 @@ const DynamicMoldureCanvas = ({
     flagsImg.onload = onImageLoad;
     envelopImg.onload = onImageLoad;
     logImg.onload = onImageLoad;
-  }, [backgroundPath, whiteboardPath, flagsPath, envelopPath, logoPath, destination, sender, message]);
+  }, [background, whiteboard, flags, envelope, logo, destination, sender, message]);
 
   return <canvas ref={canvasRef} />;
 };
