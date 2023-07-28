@@ -14,3 +14,17 @@ export async function sendMessage(payload: SendMessagePayload) : Promise<Respons
 
     return response
 }
+
+export async function getMessages() : Promise<Response>{
+    const response = await fetch(
+        "/api/elegantech",
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+    );
+
+    return response
+}

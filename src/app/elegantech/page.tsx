@@ -17,14 +17,14 @@ export default function Elegantech() {
 
     async function handleSubmit(e: FormEvent<HTMLButtonElement>) {
         e.preventDefault()
-        setDisableButton(!disableButon)
+        setDisableButton(true)
         setSubmitButtonText("Enviando")
 
         const response = await sendMessage(
             {destination: destination, sender: sender, message: textareaValue}
         )
 
-        if (response.status == 201) {
+        if (response.ok) {
             alert("Mensagem enviada! Aguarde que agora eh com a gente!")
             setDestination("")
             setSender("")
@@ -35,7 +35,7 @@ export default function Elegantech() {
         }
 
         setSubmitButtonText("Enviar")
-        setDisableButton(!disableButon)
+        setDisableButton(false)
 
     }
 
