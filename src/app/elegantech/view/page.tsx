@@ -29,7 +29,6 @@ function useInterval(callback: () => void, delay: number | null) {
 export default function ViewMessage() {
   const [messages, setMessages] = useState<SendMessagePayload[]>([]);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
-  const [isLoopCompleted, setIsLoopCompleted] = useState(false);
 
   // Fetch messages from the server and set them in the state
   const fetchMessages = async () => {
@@ -38,7 +37,6 @@ export default function ViewMessage() {
       if (response.ok) {
         const data = await response.json();
         setMessages(data);
-        setIsLoopCompleted(false); // Reset the loop completed flag when new messages are fetched
       } else {
         console.error("Error fetching messages:", response.status, response.statusText);
       }
@@ -52,26 +50,19 @@ export default function ViewMessage() {
     fetchMessages();
   }, []);
 
-  // Poll for new messages every 20 seconds, but only if the current loop is completed
+  // Poll for new messages every 20 seconds
   useInterval(() => {
-    if (isLoopCompleted) {
-      fetchMessages();
-    }
+    fetchMessages();
   }, 20000);
 
   // Switch to the next message every 20 seconds
   useInterval(() => {
     setCurrentMessageIndex(prevIndex => (prevIndex + 1) % messages.length);
-
-    // Set the loop completed flag when the loop reaches the end of the array
-    if (currentMessageIndex === messages.length - 1) {
-      setIsLoopCompleted(true);
-    }
   }, 20000);
 
   return (
     <div className='moldure-container'>
-      {messages.length > 0 && (
+      {messages.length > 0 && currentMessageIndex < messages.length && (
         <DynamicMoldure
           message={messages[currentMessageIndex].message}
           sender={`De: ${messages[currentMessageIndex].sender}`}
