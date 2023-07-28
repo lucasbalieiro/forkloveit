@@ -7,9 +7,9 @@ export default function Batucada() {
 
             <h3 className="text-xl font-bold">Veja abaixo as que já estão na fila</h3>
             <div className="aspect-w-16 aspect-h-9">
-            <iframe id="ytplayer" type="text/html"
+            <iframe id="ytplayer"
                 src="https://www.youtube.com/embed/?listType=playlist&list=PLNT6it3kpstTL3GxxYWnuJUzSEXOJ1-dq"
-                frameborder="0" allowfullscreen />
+                 allowFullScreen />
             </div>
         </div>
 
