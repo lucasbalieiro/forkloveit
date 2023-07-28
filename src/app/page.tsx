@@ -17,6 +17,10 @@ export default function Home() {
     <p className="text-lg mb-6">
       No Correio Elegantech, nosso Cupido digital usa a magia da tecnologia para enviar mensagens amorosas para o nosso Forklift, o ForkLoveIt! Escreva uma mensagem de amor, diga para quem é destinada e deixe o resto com o nosso CupidoTech. <span>💘</span>
     </p>
+
+    <Link href="/elegantech" 
+      className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+    >ESCREVA SUA MENSAGEM AQUI</Link>
   </div>
     </>
   )
