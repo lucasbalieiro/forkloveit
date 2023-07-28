@@ -33,9 +33,9 @@ export default function Header() {
           <Link href="/elegantech" className="text-sm font-semibold leading-6 text-gray-900">
             Correio Elegantech
           </Link>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link href="/batucada" className="text-sm font-semibold leading-6 text-gray-900">
             Batucada Colaborativa
-          </a>
+          </Link>
         </Popover.Group>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
