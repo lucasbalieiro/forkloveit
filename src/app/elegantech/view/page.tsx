@@ -49,16 +49,14 @@ export default function ViewMessage() {
   useEffect(() => {
     fetchMessages();
   }, []);
-
-  // Poll for new messages every 20 seconds
+  
   useInterval(() => {
-    fetchMessages();
+    if (currentMessageIndex === messages.length - 1) {
+      fetchMessages();
+    }
+    setCurrentMessageIndex((prevIndex) => (prevIndex + 1) % messages.length);
   }, 20000);
 
-  // Switch to the next message every 20 seconds
-  useInterval(() => {
-    setCurrentMessageIndex(prevIndex => (prevIndex + 1) % messages.length);
-  }, 20000);
 
   return (
     <div className='moldure-container'>
