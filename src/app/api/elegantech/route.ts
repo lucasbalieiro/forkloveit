@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
   
       return NextResponse.json(postsWithPostedFalse, { status: 200 });
     } else {
-      const randomPosts = await collection.aggregate([{ $sample: { size: 10 } }]).toArray();
+      const randomPosts = await collection.aggregate([{ $sample: { size: 5 } }]).toArray();
   
       return NextResponse.json(randomPosts, { status: 200 });
     }
