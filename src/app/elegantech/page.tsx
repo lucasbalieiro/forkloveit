@@ -20,6 +20,14 @@ export default function Elegantech() {
         setDisableButton(true)
         setSubmitButtonText("Enviando")
 
+        if(destination == "" || sender == "" || textareaValue == "")
+        {
+            alert("Preencha todos os campos!")
+            setSubmitButtonText("Enviar")
+            setDisableButton(false)
+            return
+        }
+
         const response = await sendMessage(
             {destination: destination, sender: sender, message: textareaValue}
         )
