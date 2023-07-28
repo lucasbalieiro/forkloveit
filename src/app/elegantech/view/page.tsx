@@ -53,6 +53,8 @@ export default function ViewMessage() {
   useInterval(() => {
     if (currentMessageIndex === messages.length - 1) {
       fetchMessages();
+      setCurrentMessageIndex(0)
+      return
     }
     setCurrentMessageIndex((prevIndex) => (prevIndex + 1) % messages.length);
   }, 20000);
