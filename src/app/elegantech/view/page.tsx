@@ -6,7 +6,7 @@ export default function ViewMessage() {
     return (
         <div className='moldure-container'>
           <DynamicMoldure
-            message={"Mió que isso, só dois disso!"}
+            message={"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."}
             sender="Ass: Paulo"
             destination="Para: INDT"
           />

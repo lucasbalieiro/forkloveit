@@ -1,27 +1,62 @@
 'use client'
 
-import background from "@/../public/background.png";
-import whiteboard from "@/../public/whiteboard.png";
-import flags from "@/../public/flags.svg"
-import envelope from "@/../public/envelope.png"
-import logo from "@/../public/logo.png"
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
+
+import background from '@/../public/background.png';
+import whiteboard from '@/../public/whiteboard.png';
+import flags from '@/../public/flags.svg';
+import envelope from '@/../public/envelope.png';
+import logo from '@/../public/logo.png';
 
 interface DynamicMoldureProps {
-    message: string
-    sender: string
-    destination: string
+  message: string;
+  sender: string;
+  destination: string;
 }
 
 const DynamicMoldureCanvas = ({
   message,
   sender,
-  destination
-} : DynamicMoldureProps) => {
-  const canvasRef = useRef(null);
+  destination,
+}: DynamicMoldureProps) => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  // Function to wrap the text into multiple lines
+  const wrapText = useCallback(
+    (text: string, x: number, y: number, maxWidth: number) => {
+      const ctx = canvasRef.current?.getContext('2d');
+      if (!ctx) return;
+
+      const words = text.split(' ');
+      let line = '';
+      let lineHeight = 1.2 * 90; // Adjust line height based on your font size
+      let currentY = y;
+
+      ctx.font = '90px Caveat';
+      ctx.fillStyle = '#000';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      for (let i = 0; i < words.length; i++) {
+        const testLine = line + words[i] + ' ';
+        const metrics = ctx.measureText(testLine);
+        const testWidth = metrics.width;
+        if (testWidth > maxWidth && i > 0) {
+          ctx.fillText(line, x, currentY);
+          line = words[i] + ' ';
+          currentY += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+
+      ctx.fillText(line, x, currentY);
+    },
+    []
+  );
 
   useEffect(() => {
-    const canvas = canvasRef.current as unknown as HTMLCanvasElement | null;
+    const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
@@ -29,7 +64,6 @@ const DynamicMoldureCanvas = ({
 
     canvas.width = 1920;
     canvas.height = 1080;
-
 
     const backgroundImg = new Image();
     backgroundImg.src = background.src;
@@ -59,28 +93,9 @@ const DynamicMoldureCanvas = ({
         ctx.drawImage(envelopImg, 10, 650, 443.52, 437.02); // Adjust the position and size as needed
         ctx.drawImage(logImg, 90, 750, 289.21, 289.21); // Adjust the position and size as needed
 
-        const fontSize = 101;
-        const fontFamily = 'Caveat';
-        const textColor = '#000';
-
-        const destinationX = 452.61;
-        const destinationY = 296.16; 
-
-        const messageX = 800;
-        const messageY = 500;
-
-        const senderX = 1300;
-        const senderY = 900
-
-        ctx.font = `${fontSize}px ${fontFamily}`;
-        ctx.fillStyle = textColor;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-
-        ctx.fillText(message, messageX, messageY);
-        ctx.fillText(sender, senderX, senderY);
-        ctx.fillText(destination, destinationX, destinationY);
-
+        wrapText(message, 900, 400, 1300);
+        ctx.fillText(sender, 1380, 900);
+        ctx.fillText(destination, 452.61, 250);
       }
     };
 
@@ -89,7 +104,7 @@ const DynamicMoldureCanvas = ({
     flagsImg.onload = onImageLoad;
     envelopImg.onload = onImageLoad;
     logImg.onload = onImageLoad;
-  }, [background, whiteboard, flags, envelope, logo, destination, sender, message]);
+  }, [background, whiteboard, flags, envelope, logo, destination, sender, message, wrapText]);
 
   return <canvas ref={canvasRef} />;
 };
