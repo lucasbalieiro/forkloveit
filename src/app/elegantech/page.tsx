@@ -5,6 +5,7 @@ import { sendMessage } from "@/app/services/elegantech";
 
 export default function Elegantech() {
     const [disableButon, setDisableButton] = useState(false)
+    const [submitButtonText, setSubmitButtonText] = useState<"Enviar" | "Enviando">("Enviar")
     const [textareaValue, setTextareaValue] = useState('')
     const [destination, setDestination] = useState('')
     const [sender, setSender] = useState('')
@@ -17,6 +18,7 @@ export default function Elegantech() {
     async function handleSubmit(e: FormEvent<HTMLButtonElement>) {
         e.preventDefault()
         setDisableButton(!disableButon)
+        setSubmitButtonText("Enviando")
 
         const response = await sendMessage(
             {destination: destination, sender: sender, message: textareaValue}
@@ -24,10 +26,15 @@ export default function Elegantech() {
 
         if (response.status == 201) {
             alert("Mensagem enviada! Aguarde que agora eh com a gente!")
+            setDestination("")
+            setSender("")
+            setTextareaValue("")
             
         }else {
             alert ("Oops, tivemos um probleminha. Chama o bombeiro!")
         }
+
+        setSubmitButtonText("Enviar")
         setDisableButton(!disableButon)
 
     }
@@ -105,7 +112,7 @@ export default function Elegantech() {
             </div>
 
             <div className="mt-6 flex items-center justify-end gap-x-6">
-                <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
+                <button disabled={disableButon} type="button" className="text-sm font-semibold leading-6 text-gray-900">
                     Cancelar
                 </button>
                 <button
@@ -115,7 +122,7 @@ export default function Elegantech() {
                     }}
                     disabled={disableButon}
                 >
-                    Enviar
+                    {submitButtonText}
                 </button>
             </div>
         </form>
