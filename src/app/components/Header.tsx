@@ -33,9 +33,9 @@ export default function Header() {
           <Link href="/elegantech" className="text-sm font-semibold leading-6 text-gray-900">
             Correio Elegantech
           </Link>
-          <Link href="/batucada" className="text-sm font-semibold leading-6 text-gray-900">
+          {/* <Link href="/batucada" className="text-sm font-semibold leading-6 text-gray-900">
             Batucada Colaborativa
-          </Link>
+          </Link> */}
         </Popover.Group>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -69,14 +69,14 @@ export default function Header() {
                 >
                   Correio Elegantech
                 </Link>
-                <Link
+                {/* <Link
                   href="/batucada"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   onClick={() => setMobileMenuOpen(false)}
 
                 >
                   Batucada Colaborativa
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
